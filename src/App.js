@@ -5,23 +5,25 @@ import Profile from './components/profile';
 import Filters from './components/filters';
 import Search from './components/search';
 import RepoList from './components/repo-list';
-import repoData from './components/repo-data';
+
 import { useState, useEffect } from 'react'
 import { getUser, getRepos } from './services/users'
+import { useParams } from 'react-router-dom';
+import Modal from './modal';
 
-//const repoList = [{
-//  name: 'mi primer proyecto con react',
-//  id: 123,},
-//  {name: 'mi segrundo proyecto con react',
-//  id: 124,
-//}
-//]
 
 function App() {
+  const params = useParams()
+  let username = params.user
+  if (!username) {
+    username = 'nekurm88'
+  }
 const [user, setUser] = useState({})
   const [repos, setRepos] = useState([])
+  const [modal, setModal] = useState(false)
+  const [search, setSearch] = useState('')
   useEffect(() => {
-    getUser('nekurm88').then(({ data, isError }) => {
+    getUser(username).then(({ data, isError }) => {
       if (isError) {
         console.log('no hemos encontrado a este crack')
         return
@@ -29,22 +31,23 @@ const [user, setUser] = useState({})
       setUser(data)
     })
 
-  }, [])
+  }, [username])
   useEffect(() => {
-    getRepos('nekurm88').then(({ data, isError }) => {
+    getRepos(username).then(({ data, isError }) => {
       if (isError) {
         console.log('no hemos encontrado los repos de este crack')
         return
       }
       setRepos(data)
     })
-  }, [])
+  }, [username])
    return (
       <Layout>
+        <Modal isActive={modal} setModal={setModal} />
         <Profile {...user} />
-        <Filters></Filters>
-        <RepoList repoList={repos} />
-        <Search></Search>
+        <Filters setSearch={setSearch} repoListCount={repos.length}/>
+        <RepoList search={search} repoList={repos} />
+        <Search setModal={setModal}/>
       </Layout>
      
     )
