@@ -7,7 +7,7 @@ Este proyecto es una aplicación web que te permite explorar usuarios de GitHub 
 - React
 - Styled Components
 - GitHub API
-- 
+  
 <img src="https://github.com/Nekurm88/Gitlist/blob/master/src/components/icon/gitlist.png">
 
 
