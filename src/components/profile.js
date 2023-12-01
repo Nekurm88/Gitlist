@@ -47,6 +47,18 @@ const ProfileStyled = styled.div`
         gap: .5rem;
         margin-block-end: 1.5rem;
     }
+    @media screen and (max-width: 768px){
+        max-inline-size: 100vw;
+        .avatar{
+            inline-size: 6rem;
+            block-size: 6rem;
+        }
+        .user-info{
+            display: flex;
+            gap: 1rem;
+            align-items: center
+        }
+    }
 `
 
 function Profile(props) {
